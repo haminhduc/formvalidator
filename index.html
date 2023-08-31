@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Authentication Form</title>
+  </head>
+  <body>
+    <div class="main">
+      <form action="" method="POST" class="form" id="form-1">
+        <h3 class="heading">Register</h3>
+        <p class="desc">Let's explore this world together</p>
+
+        <div class="spacer"></div>
+
+        <div class="form-group">
+          <label for="fullName" class="form-label">Full Name</label>
+          <input
+            id="fullName"
+            name="fullName"
+            type="text"
+            placeholder="example: Steven Ha"
+            class="form-control"
+          />
+          <span class="form-message"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="email" class="form-label">Email</label>
+          <input
+            id="email"
+            name="email"
+            type="text"
+            placeholder="example: email@domain.com"
+            class="form-control"
+          />
+          <span class="form-message"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Password"
+            class="form-control"
+          />
+          <span class="form-message"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="password_confirmation" class="form-label"
+            >Confirm Password</label
+          >
+          <input
+            id="password_confirmation"
+            name="password_confirmation"
+            placeholder="Confirm Password"
+            type="password"
+            class="form-control"
+          />
+          <span class="form-message"></span>
+        </div>
+
+        <!-- <div class="form-group">
+          <label for="gender" class="form-label">Gender</label>
+          <div class="gender-radio">
+            <input
+              name="gender"
+              type="radio"
+              value="Male"
+              class="form-control"
+              placeholder="male"
+            />
+            <span> Male </span>
+          </div>
+          <div class="gender-radio">
+            <input
+              name="gender"
+              type="radio"
+              value="Female"
+              class="form-control"
+            />
+            <span> Female </span>
+          </div>
+          <div class="gender-radio">
+            <input
+              name="gender"
+              type="radio"
+              value="other"
+              class="form-control"
+            />
+            <span> other </span>
+          </div>
+          <span class="form-message"></span>
+        </div> -->
+
+        <button class="form-submit">Sign me in</button>
+      </form>
+    </div>
+    <script src="validator.js"></script>
+    <script>
+      Validator({
+        form: "#form-1",
+        formGroupSelector: ".form-group",
+        errorSelector: ".form-message",
+        // using rules array to validate input fields
+        rules: [
+          //order of validator is matter. First come first serve
+          Validator.isRequired("#fullName", "Full name is required"),
+          Validator.isRequired("#email", "email is required"),
+          Validator.isEmail("#email"),
+          Validator.isRequired("#password", "Password is required"),
+          Validator.minLength(
+            "#password",
+            6,
+            "Password must be at least 6 characters"
+          ),
+          Validator.isRequired(
+            "#password_confirmation",
+            "Please re-enter your password"
+          ),
+
+          Validator.isMatch(
+            "#password_confirmation",
+            function () {
+              return document.querySelector("#form-1 #password").value;
+            },
+            "Confirm password is incorrect"
+          ),
+          Validator.isRequired('input[name="gender"]', "Please select gender"),
+        ],
+        onSubmit: function (data) {
+          console.log(data);
+        },
+      });
+    </script>
+  </body>
+</html>
